@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,12 +18,23 @@ public class Post {
 
     private String title;
 
-    private String author;
-
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @Getter
-    @Setter
     private LocalDateTime createAt;
+
+    // Relação com o autor do post
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private User author;
+
+    // Relação com os comentários do post
+   @ManyToMany
+    @JoinTable(
+            name = "post_tags",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags;
+
 }
