@@ -21,6 +21,10 @@ import java.util.List;
     @Column(nullable = false, unique = true)
     private String name;
 
+    public Tag(String name) {
+        this.name = name;
+    }
+
     // Relacionamento inverso: posts que usam essa tag
     @ManyToMany(mappedBy = "tags")
     private List<Post> posts;
